@@ -3,7 +3,7 @@ import requests
 url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
-    "query": "placeOfPerformance.countryCode:ITA",
+    "query": "*",
     "limit": 10
 }
 
