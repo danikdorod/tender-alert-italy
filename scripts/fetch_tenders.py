@@ -3,12 +3,11 @@ import requests
 url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
-    "query": "placeOfPerformance.countryCode=ITA",
+    "query": "*",
     "page": 1,
     "fields": [
         "OPP-021-Contract",   # contract ID
-        "BT-13(t)-Part",      # title (THIS is the real title field)
-        "place-performance-streetline1-part"
+        "BT-13(t)-Part"      # title (THIS is the real title field)
     ]
 }
 
