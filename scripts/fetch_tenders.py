@@ -1,44 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
-import json
-from datetime import datetime
-import os
 
-URL = "https://ted.europa.eu/TED/rss_en.xml"
+url = "https://ted.europa.eu/TED/search/searchResult.do?format=rss&page=1&scope=3&country=IT"
 
-response = requests.get(URL)
-
-if response.status_code != 200:
-    print("Error fetching RSS")
-    exit(1)
-
-# 🔥 PARSE WITH TOLERANT PARSER
+response = requests.get(url)
 soup = BeautifulSoup(response.content, "xml")
 
 items = soup.find_all("item")
 
 tenders = []
 
-for item in items[:30]:
+for item in items:
     title = item.title.text if item.title else ""
     link = item.link.text if item.link else ""
-    pub_date = item.pubDate.text if item.pubDate else ""
 
-    # 🔍 FILTER (basic, we improve later)
-    keywords = ["software", "it", "digital", "system"]
-
-    if any(k in title.lower() for k in keywords):
-        tenders.append({
-            "title": title,
-            "link": link,
-            "date": pub_date,
-            "fetched_at": datetime.now().isoformat()
-        })
-
-# Ensure folder exists
-os.makedirs("data", exist_ok=True)
-
-with open("data/tenders.json", "w", encoding="utf-8") as f:
-    json.dump(tenders, f, indent=2, ensure_ascii=False)
+    tenders.append({
+        "title": title,
+        "link": link
+    })
 
 print(f"Saved {len(tenders)} tenders")
