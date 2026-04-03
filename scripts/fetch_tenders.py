@@ -8,7 +8,6 @@ payload = {
     "fields": [
         "OPP-021-Contract",   # contract ID
         "BT-13(t)-Part",      # title (THIS is the real title field)
-        "organisation-name-part",
         "place-performance-streetline1-part"
     ]
 }
