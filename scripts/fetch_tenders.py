@@ -13,6 +13,9 @@ headers = {
 
 response = requests.post(url, json=payload, headers=headers)
 
+print(response.status_code)
+print(response.text[:1000])
+
 data = response.json()
 
 notices = data.get("results", [])
