@@ -5,7 +5,12 @@ url = "https://api.ted.europa.eu/v3/notices/search"
 payload = {
     "query": "publicationDate:[2024-01-01 TO 2026-12-31]",
     "page": 1,
-    "fields": ["title", "noticeId"]
+    "fields": [
+        "OPP-021-Contract",   # contract ID
+        "BT-13(t)-Part",      # title (THIS is the real title field)
+        "organisation-name-part",
+        "place-performance-streetline1-part"
+    ]
 }
 
 headers = {
