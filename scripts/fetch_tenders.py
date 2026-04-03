@@ -4,7 +4,8 @@ url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
     "query": "publicationDate:[2024-01-01 TO 2026-12-31]",
-    "page": 1
+    "page": 1,
+    "fields": ["title", "noticeId"]
 }
 
 headers = {
@@ -31,5 +32,5 @@ notices = (
 
 print(f"Saved {len(notices)} tenders")
 
-for n in notices:
-    print(n.get("title"))
+for n in notices[:5]:
+    print(n)
