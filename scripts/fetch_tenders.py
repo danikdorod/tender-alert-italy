@@ -4,7 +4,7 @@ url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
     "page": 1,
-    "size": 20,
+    "pageSize": 20,
     "fields": [
         "OPP-021-Contract",   # contract ID
         "BT-13(t)-Part"       # title
