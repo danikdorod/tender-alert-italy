@@ -3,7 +3,7 @@ import requests
 url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
-    "query": "publicationDate:[2024-01-01 TO 2026-12-31]",
+    "query": "placeOfPerformance.countryCode=ITA",
     "page": 1,
     "fields": [
         "OPP-021-Contract",   # contract ID
