@@ -4,7 +4,7 @@ url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
     "query": "publicationDate:[2024-01-01 TO 2026-12-31]",
-    "page": 0
+    "page": 1
 }
 
 headers = {
