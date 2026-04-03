@@ -1,8 +1,8 @@
 import requests
-import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
 import json
-import re
 from datetime import datetime
+import os
 
 URL = "https://ted.europa.eu/TED/rss_en.xml"
 
@@ -12,23 +12,22 @@ if response.status_code != 200:
     print("Error fetching RSS")
     exit(1)
 
-clean_xml = re.sub(r"[^\x09\x0A\x0D\x20-\x7F]+", "", response.text)
+# 🔥 PARSE WITH TOLERANT PARSER
+soup = BeautifulSoup(response.content, "xml")
 
-try:
-    root = ET.fromstring(clean_xml)
-except Exception as e:
-    print("XML parsing failed:", e)
-    exit(1)
+items = soup.find_all("item")
 
 tenders = []
 
-for item in root.findall(".//item")[:30]:
-    title = item.find("title").text if item.find("title") is not None else ""
-    link = item.find("link").text if item.find("link") is not None else ""
-    pub_date = item.find("pubDate").text if item.find("pubDate") is not None else ""
+for item in items[:30]:
+    title = item.title.text if item.title else ""
+    link = item.link.text if item.link else ""
+    pub_date = item.pubDate.text if item.pubDate else ""
 
-    # 🔍 BASIC FILTER (we improve later)
-    if any(keyword in title.lower() for keyword in ["software", "it", "digital", "system"]):
+    # 🔍 FILTER (basic, we improve later)
+    keywords = ["software", "it", "digital", "system"]
+
+    if any(k in title.lower() for k in keywords):
         tenders.append({
             "title": title,
             "link": link,
@@ -37,7 +36,6 @@ for item in root.findall(".//item")[:30]:
         })
 
 # Ensure folder exists
-import os
 os.makedirs("data", exist_ok=True)
 
 with open("data/tenders.json", "w", encoding="utf-8") as f:
