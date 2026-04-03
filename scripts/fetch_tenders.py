@@ -3,11 +3,11 @@ import requests
 url = "https://api.ted.europa.eu/v3/notices/search"
 
 payload = {
-    "query": "*",
     "page": 1,
+    "size": 20,
     "fields": [
         "OPP-021-Contract",   # contract ID
-        "BT-13(t)-Part"      # title (THIS is the real title field)
+        "BT-13(t)-Part"       # title
     ]
 }
 
