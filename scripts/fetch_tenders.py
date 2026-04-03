@@ -1,22 +1,23 @@
 import requests
-from bs4 import BeautifulSoup
 
-url = "https://ted.europa.eu/TED/search/searchResult.do?format=rss&page=1&scope=3&country=IT"
+url = "https://api.ted.europa.eu/v3/notices/search"
 
-response = requests.get(url)
-soup = BeautifulSoup(response.content, "xml")
+payload = {
+    "query": "placeOfPerformance.countryCode:ITA",
+    "limit": 10
+}
 
-items = soup.find_all("item")
+headers = {
+    "Content-Type": "application/json"
+}
 
-tenders = []
+response = requests.post(url, json=payload, headers=headers)
 
-for item in items:
-    title = item.title.text if item.title else ""
-    link = item.link.text if item.link else ""
+data = response.json()
 
-    tenders.append({
-        "title": title,
-        "link": link
-    })
+notices = data.get("results", [])
 
-print(f"Saved {len(tenders)} tenders")
+print(f"Saved {len(notices)} tenders")
+
+for n in notices:
+    print(n.get("title"))
